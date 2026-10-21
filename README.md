@@ -15,7 +15,6 @@
 
 ---
 
-# Neon Games
 
 Two free, open-world browser games built on the **[Neon Engine](https://github.com/drsamonline/neon-engine)**.
 No install, no account, no backend — both run entirely in your browser and keep

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0a0713" />
+<meta name="robots" content="noindex" />
+<title>404 — Cabinet not found · Neon Games</title>
+<link rel="icon" href="/neon-games/assets/favicon.svg" type="image/svg+xml" />
+<style>
+  :root{--bg:#0a0713;--violet:#8b5cf6;--lime:#a3e635;--ink:#f1eeff;--muted:#a99fd0;--line:#2c2356}
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+    color:var(--ink);text-align:center;
+    background:
+      radial-gradient(1000px 600px at 20% 0%, rgba(139,92,246,.22), transparent 60%),
+      radial-gradient(800px 500px at 100% 100%, rgba(163,230,53,.12), transparent 55%),
+      var(--bg);
+  }
+  .card{max-width:560px;border:1px solid var(--line);border-radius:22px;padding:44px 32px;background:rgba(21,16,44,.7)}
+  .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:4.4rem;font-weight:800;letter-spacing:.04em;
+    background:linear-gradient(100deg,var(--violet),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+  h1{font-size:1.5rem;margin:14px 0 8px}
+  p{color:var(--muted);margin:0 0 24px}
+  svg{width:120px;height:120px;margin:0 auto 8px;display:block}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;padding:13px 22px;border-radius:999px;
+    color:#0b0616;background:linear-gradient(90deg,var(--violet),var(--lime));text-decoration:none}
+  .btn:hover{filter:brightness(1.07)}
+  a.link{display:block;margin-top:16px;color:var(--muted);text-decoration:none}
+  a.link:hover{color:var(--lime)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a3e635"/></linearGradient></defs>
+      <rect x="6" y="30" width="36" height="13" rx="6.5" fill="#1b1440" stroke="url(#g)" stroke-width="2"/>
+      <rect x="22" y="10" width="4" height="22" rx="2" fill="url(#g)"/>
+      <circle cx="24" cy="10" r="6" fill="#a3e635"/>
+      <circle cx="14" cy="36.5" r="2.6" fill="#8b5cf6"/><circle cx="34" cy="36.5" r="2.6" fill="#8b5cf6"/>
+    </svg>
+    <div class="code">404</div>
+    <h1>Cabinet not found</h1>
+    <p>That page isn't on the arcade floor. Head back to the lobby and pick a game.</p>
+    <a class="btn" href="/neon-games/">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      Back to Neon Games
+    </a>
+    <a class="link" href="https://github.com/drsamonline/neon-games">Repository on GitHub</a>
+  </div>
+</body>
+</html>

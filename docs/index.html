@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0a0713" />
+<title>Neon Games — Two Free Open-World Browser Games by Dr. Sohil Momin</title>
+<meta name="description" content="Neon Games is a free arcade lobby of open-world browser games: Dead Zone (endless zombie survival) and Neon Police (crime response across a neon city). No install, no account, no backend — both run offline once loaded, built on the Neon Engine." />
+<meta name="keywords" content="Neon Games, Dead Zone, Neon Police, free browser games, open world browser game, zombie survival, crime response game, offline web game, WebGL game, Neon Engine, no install, no account, Dr. Sohil Momin, drsamonline" />
+<meta name="author" content="Dr. Sohil Momin" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://drsamonline.github.io/neon-games/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Neon Games" />
+<meta property="og:title" content="Neon Games — Two Free Open-World Browser Games" />
+<meta property="og:description" content="Dead Zone and Neon Police: two free, open-world browser games built on the Neon Engine. No install, no account, no backend — play in your browser, offline-ready once loaded." />
+<meta property="og:url" content="https://drsamonline.github.io/neon-games/" />
+<meta property="og:image" content="https://socialify.git.ci/drsamonline/neon-games/image?name=1&amp;owner=1&amp;description=1&amp;language=1&amp;theme=Dark&amp;font=Inter" />
+<meta property="og:image:alt" content="Neon Games — two free open-world browser games" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neon Games — Two Free Open-World Browser Games" />
+<meta name="twitter:description" content="Dead Zone and Neon Police: two free, open-world browser games built on the Neon Engine. No install, no account, no backend." />
+<meta name="twitter:image" content="https://socialify.git.ci/drsamonline/neon-games/image?name=1&amp;owner=1&amp;description=1&amp;language=1&amp;theme=Dark&amp;font=Inter" />
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+
+<style>
+  :root{
+    --bg:#0a0713;
+    --bg-2:#0f0b20;
+    --panel:#15102c;
+    --panel-2:#1b1440;
+    --line:#2c2356;
+    --violet:#8b5cf6;
+    --violet-2:#a78bfa;
+    --lime:#a3e635;
+    --lime-2:#bef264;
+    --ink:#f1eeff;
+    --muted:#a99fd0;
+    --radius:22px;
+    --radius-sm:14px;
+    --maxw:1180px;
+    --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 15% -10%, rgba(139,92,246,.20), transparent 60%),
+      radial-gradient(1000px 600px at 100% 0%, rgba(163,230,53,.10), transparent 55%),
+      linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 55%, var(--bg) 100%);
+    background-attachment:fixed;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* tiled arcade-wall backdrop */
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(139,92,246,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,.07) 1px, transparent 1px);
+    background-size:44px 44px, 44px 44px;
+    mask-image:radial-gradient(1200px 800px at 50% 0%, #000 20%, transparent 80%);
+    -webkit-mask-image:radial-gradient(1200px 800px at 50% 0%, #000 20%, transparent 80%);
+  }
+  a{color:var(--violet-2);text-decoration:none}
+  a:hover{color:var(--lime-2)}
+  h1,h2,h3{line-height:1.15;margin:0 0 .4em}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .eyebrow{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--lime);margin:0 0 12px;display:flex;align-items:center;gap:10px
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--lime);display:inline-block;border-radius:2px}
+  section{padding:76px 0;position:relative}
+  .section-head{max-width:760px;margin-bottom:40px}
+  .section-head h2{font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:-.02em}
+  .section-head p{color:var(--muted);font-size:1.05rem;margin:0}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(10,7,19,.72);
+    border-bottom:1px solid transparent;
+    transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  header.nav.scrolled{border-bottom-color:var(--line);box-shadow:0 10px 30px -18px rgba(139,92,246,.7)}
+  .nav-inner{display:flex;align-items:center;gap:18px;height:64px;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.04em;color:var(--ink)}
+  .brand:hover{color:var(--ink)}
+  .brand .joy{width:30px;height:30px;flex:none}
+  .brand b{background:linear-gradient(90deg,var(--violet-2),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:6px;margin-left:auto;align-items:center}
+  .nav-links a{
+    color:var(--muted);font-size:.92rem;font-weight:600;padding:8px 12px;border-radius:10px;transition:.18s
+  }
+  .nav-links a:hover{color:var(--ink);background:rgba(139,92,246,.14)}
+  .nav-cta{
+    margin-left:6px;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.8rem;font-weight:700;letter-spacing:.08em;
+    padding:9px 16px;border-radius:999px;color:#12081f;
+    background:linear-gradient(90deg,var(--lime),var(--violet-2));
+    box-shadow:0 0 0 1px rgba(163,230,53,.4),0 8px 24px -10px rgba(163,230,53,.8);
+  }
+  .nav-cta:hover{color:#12081f;filter:brightness(1.08)}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px;cursor:pointer}
+  @media (max-width:880px){
+    .nav-links{
+      position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;
+      background:rgba(12,9,24,.98);border-bottom:1px solid var(--line);padding:10px 16px 16px;gap:2px;
+      display:none
+    }
+    .nav-links.open{display:flex}
+    .nav-toggle{display:inline-flex;margin-left:auto}
+    .nav-cta{margin:8px 0 0}
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:.98rem;
+    padding:14px 24px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap
+  }
+  .btn svg{width:18px;height:18px}
+  .btn-primary{color:#0b0616;background:linear-gradient(90deg,var(--violet),var(--lime));box-shadow:0 12px 34px -14px rgba(139,92,246,.9)}
+  .btn-primary:hover{color:#0b0616;transform:translateY(-2px);filter:brightness(1.06)}
+  .btn-ghost{color:var(--ink);background:rgba(139,92,246,.10);border-color:var(--line)}
+  .btn-ghost:hover{color:var(--ink);border-color:var(--violet);background:rgba(139,92,246,.2);transform:translateY(-2px)}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:64px;padding-bottom:40px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);letter-spacing:-.03em;margin-bottom:.25em}
+  .hero h1 .glow{
+    background:linear-gradient(100deg,var(--violet-2) 0%, var(--lime) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 40px rgba(139,92,246,.35)
+  }
+  .hero p.lede{font-size:1.15rem;color:var(--muted);max-width:56ch;margin:0 0 26px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:rgba(20,15,40,.6)
+  }
+  .chip b{color:var(--lime);font-weight:700}
+  .hero-art{position:relative;display:grid;place-items:center}
+  .cabinet{width:100%;max-width:400px;filter:drop-shadow(0 30px 60px rgba(139,92,246,.35))}
+
+  /* ---------- GAME GRID (centrepiece) ---------- */
+  .grid-wall{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px
+  }
+  .game-card{
+    position:relative;border-radius:var(--radius);padding:26px;overflow:hidden;
+    background:linear-gradient(160deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);
+    transition:transform .22s ease, box-shadow .28s ease, border-color .28s ease;
+  }
+  .game-card::after{
+    content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(420px 200px at var(--mx,50%) var(--my,0%), rgba(163,230,53,.16), transparent 60%);
+    opacity:0;transition:opacity .3s ease
+  }
+  .game-card:hover{transform:translateY(-6px);border-color:var(--violet);box-shadow:0 26px 60px -30px rgba(139,92,246,.95),0 0 0 1px rgba(139,92,246,.35)}
+  .game-card:hover::after{opacity:1}
+  .game-card .tag{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--lime);border:1px solid rgba(163,230,53,.35);border-radius:999px;padding:4px 10px;display:inline-block;margin-bottom:16px
+  }
+  .game-card h3{font-size:1.5rem;display:flex;align-items:center;gap:12px}
+  .game-card h3 svg{width:34px;height:34px;flex:none}
+  .game-card p{color:var(--muted);margin:.5em 0 18px;font-size:.98rem}
+  .game-card ul{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+  .game-card li{display:flex;gap:9px;align-items:flex-start;font-size:.9rem;color:var(--ink)}
+  .game-card li svg{width:16px;height:16px;flex:none;margin-top:4px;color:var(--lime)}
+  .game-card .card-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .game-card .btn{padding:11px 18px;font-size:.9rem}
+
+  /* ---------- FEATURE CARDS ---------- */
+  .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+  .f-card{
+    border-radius:var(--radius-sm);padding:22px;background:rgba(21,16,44,.72);
+    border:1px solid var(--line);transition:.22s
+  }
+  .f-card:hover{border-color:var(--violet);background:rgba(27,20,64,.9);transform:translateY(-4px)}
+  .f-ico{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;
+    background:linear-gradient(140deg,rgba(139,92,246,.28),rgba(163,230,53,.16));border:1px solid var(--line)
+  }
+  .f-ico svg{width:24px;height:24px;color:var(--lime-2)}
+  .f-card h3{font-size:1.08rem;margin-bottom:.3em}
+  .f-card p{margin:0;color:var(--muted);font-size:.92rem}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;counter-reset:step}
+  .step{
+    position:relative;padding:26px 22px;border-radius:var(--radius-sm);
+    background:linear-gradient(160deg,var(--panel),rgba(15,11,32,.6));border:1px solid var(--line)
+  }
+  .step .num{
+    font-family:var(--mono);font-size:.8rem;font-weight:700;color:#12081f;background:var(--lime);
+    width:30px;height:30px;border-radius:9px;display:grid;place-items:center;margin-bottom:14px
+  }
+  .step h3{font-size:1.05rem;margin-bottom:.3em}
+  .step p{margin:0;color:var(--muted);font-size:.92rem}
+
+  /* ---------- DEMO ---------- */
+  .demo-panel{
+    display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;
+    border-radius:var(--radius);padding:34px;border:1px solid var(--line);
+    background:linear-gradient(160deg,rgba(27,20,64,.85),rgba(15,11,32,.85))
+  }
+  .demo-cab{width:100%;max-width:360px;margin:0 auto;display:block;filter:drop-shadow(0 24px 50px rgba(139,92,246,.35))}
+  .demo-panel h2{font-size:clamp(1.5rem,3vw,2.2rem)}
+  .demo-panel .cap{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+
+  /* ---------- BADGES ---------- */
+  .badge-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .badge-row img{height:26px;display:block}
+  .cssbadge{
+    font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.04em;
+    padding:5px 11px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;
+    background:rgba(139,92,246,.16);border:1px solid var(--line);color:var(--ink)
+  }
+  .cssbadge b{color:var(--lime)}
+  .cssbadge.v{background:rgba(163,230,53,.14);border-color:rgba(163,230,53,.4)}
+
+  /* ---------- GET STARTED ---------- */
+  .start-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:start}
+  .code{
+    font-family:var(--mono);font-size:.86rem;background:#0b0817;border:1px solid var(--line);
+    border-radius:var(--radius-sm);padding:18px 20px;overflow-x:auto;color:var(--lime-2);
+    white-space:pre;line-height:1.75
+  }
+  .code .c{color:var(--muted)}
+  .code .p{color:var(--violet-2)}
+  .note{
+    margin-top:16px;font-size:.88rem;color:var(--muted);border-left:3px solid var(--violet);padding-left:14px
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{display:grid;gap:12px;max-width:900px}
+  details.qa{
+    border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(21,16,44,.6);
+    padding:2px 20px;transition:.2s
+  }
+  details.qa[open]{border-color:var(--violet);background:rgba(27,20,64,.85)}
+  details.qa summary{
+    cursor:pointer;list-style:none;font-weight:700;padding:16px 0;display:flex;justify-content:space-between;gap:16px;align-items:center
+  }
+  details.qa summary::-webkit-details-marker{display:none}
+  details.qa summary .pm{color:var(--lime);font-family:var(--mono);font-size:1.2rem;flex:none;transition:transform .2s}
+  details.qa[open] summary .pm{transform:rotate(45deg)}
+  details.qa p{margin:0 0 18px;color:var(--muted);font-size:.94rem}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:46px 0 34px;background:rgba(8,6,16,.7)}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px}
+  .foot-grid h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin:0 0 14px}
+  .foot-grid a{display:block;color:var(--muted);font-size:.9rem;padding:5px 0}
+  .foot-grid a:hover{color:var(--ink)}
+  .foot-brand p{color:var(--muted);font-size:.9rem;max-width:40ch}
+  .foot-bottom{
+    margin-top:32px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+    font-size:.85rem;color:var(--muted)
+  }
+  .foot-bottom b{color:var(--ink)}
+
+  /* ---------- REVEAL ANIMATION ---------- */
+  .reveal{opacity:0;transform:translateY(18px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+    *{animation:none !important;transition:none !important}
+  }
+  /* joystick idle bob, motion-safe only */
+  @media (prefers-reduced-motion: no-preference){
+    .joy-bob{animation:bob 4.5s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .scan{animation:scan 6s linear infinite}
+    @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(600%)}}
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .hero-art{order:-1}
+    .demo-panel{grid-template-columns:1fr}
+    .start-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .foot-brand{grid-column:1/-1}
+  }
+  @media (max-width:520px){
+    .foot-grid{grid-template-columns:1fr}
+    section{padding:56px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="Neon Games home">
+      <svg class="joy" viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="jg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a3e635"/></linearGradient></defs>
+        <rect x="6" y="30" width="36" height="14" rx="7" fill="#1b1440" stroke="url(#jg)" stroke-width="2"/>
+        <rect x="22" y="8" width="4" height="24" rx="2" fill="url(#jg)"/>
+        <circle cx="24" cy="8" r="6" fill="#a3e635"/>
+        <circle cx="14" cy="37" r="3" fill="#8b5cf6"/><circle cx="34" cy="37" r="3" fill="#8b5cf6"/>
+      </svg>
+      <span>NEON<b>&nbsp;GAMES</b></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#games">Games</a>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#demo">Demo</a>
+      <a href="#faq">FAQ</a>
+      <a href="#start">Get started</a>
+      <a class="nav-cta" href="#games"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>PLAY</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <p class="eyebrow">Arcade lobby · two games · free forever</p>
+      <h1>Step into the <span class="glow">neon arcade</span>.</h1>
+      <p class="lede">
+        <b>Neon Games</b> is a small lobby of free, open-world browser games — <b>Dead Zone</b>
+        and <b>Neon Police</b>. No install, no account, no backend: pick a cabinet and it runs
+        entirely in your browser, and keeps working offline once loaded.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="dead-zone/">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Play Dead Zone
+        </a>
+        <a class="btn btn-ghost" href="neon-police/">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Play Neon Police
+        </a>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>2</b> games</span>
+        <span class="chip">no account</span>
+        <span class="chip">no backend</span>
+        <span class="chip">offline-ready</span>
+        <span class="chip">mouse · keyboard · touch</span>
+      </div>
+    </div>
+    <div class="hero-art reveal">
+      <!-- inline-SVG arcade cabinet motif -->
+      <svg class="cabinet joy-bob" viewBox="0 0 320 380" role="img" aria-label="Illustration of a neon arcade cabinet with a joystick">
+        <defs>
+          <linearGradient id="cab" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a3e635"/></linearGradient>
+          <linearGradient id="scr" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1b1440"/><stop offset="1" stop-color="#0b0817"/></linearGradient>
+        </defs>
+        <rect x="30" y="14" width="260" height="352" rx="26" fill="#120c26" stroke="url(#cab)" stroke-width="3"/>
+        <rect x="52" y="42" width="216" height="150" rx="14" fill="url(#scr)" stroke="#2c2356" stroke-width="2"/>
+        <g opacity=".9">
+          <rect x="66" y="58" width="188" height="8" rx="4" fill="#8b5cf6"/>
+          <rect x="66" y="76" width="120" height="8" rx="4" fill="#a3e635" opacity=".8"/>
+          <rect x="66" y="94" width="160" height="8" rx="4" fill="#8b5cf6" opacity=".55"/>
+          <rect x="66" y="112" width="96" height="8" rx="4" fill="#a3e635" opacity=".5"/>
+        </g>
+        <rect x="66" y="132" width="188" height="46" rx="10" fill="rgba(163,230,53,.14)" stroke="rgba(163,230,53,.5)"/>
+        <text x="160" y="161" text-anchor="middle" font-family="monospace" font-size="16" fill="#bef264">INSERT COIN</text>
+        <!-- control deck -->
+        <rect x="52" y="212" width="216" height="118" rx="14" fill="#1b1440" stroke="#2c2356" stroke-width="2"/>
+        <rect x="96" y="238" width="6" height="34" rx="3" fill="#a3e635"/>
+        <circle cx="99" cy="234" r="11" fill="#8b5cf6"/>
+        <circle cx="99" cy="234" r="4" fill="#e9d5ff"/>
+        <circle cx="168" cy="252" r="13" fill="#8b5cf6"/><circle cx="168" cy="252" r="5" fill="#f1eeff"/>
+        <circle cx="206" cy="252" r="13" fill="#a3e635"/><circle cx="206" cy="252" r="5" fill="#1b1440"/>
+        <circle cx="187" cy="288" r="13" fill="#a78bfa"/><circle cx="187" cy="288" r="5" fill="#1b1440"/>
+        <rect x="30" y="336" width="260" height="30" rx="12" fill="#0f0b20" stroke="#2c2356"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GAMES (centrepiece grid) ================= -->
+<section id="games">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">The wall of cabinets</p>
+      <h2>Two games, one neon city engine</h2>
+      <p>Every cabinet below is a full open-world game that runs straight from your browser tab.</p>
+    </div>
+
+    <div class="grid-wall">
+      <!-- DEAD ZONE -->
+      <article class="game-card reveal">
+        <span class="tag">Endless survival</span>
+        <h3>
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="17" fill="none" stroke="#a3e635" stroke-width="2.5"/>
+            <circle cx="18" cy="20" r="3.2" fill="#a3e635"/><circle cx="30" cy="20" r="3.2" fill="#a3e635"/>
+            <path d="M16 31c2.4 3 5.2 4.4 8 4.4S29.6 34 32 31" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 7v6M24 35v6M7 24h6M35 24h6" stroke="#8b5cf6" stroke-width="2" opacity=".6"/>
+          </svg>
+          Dead Zone
+        </h3>
+        <p>Endless zombie survival in an open city that never stops generating. No timer and no end — the horde escalates as you level.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Kill to level up, spend coins at the wandering merchant</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Weapon wheel, rarity tiers, throwables &amp; melee</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Bullet time, vehicles, map &amp; progress panels</li>
+        </ul>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="dead-zone/">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Play now
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/drsamonline/neon-games/tree/main/dead-zone">Source</a>
+        </div>
+      </article>
+
+      <!-- NEON POLICE -->
+      <article class="game-card reveal">
+        <span class="tag">Crime response</span>
+        <h3>
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 6l14 5v11c0 9-6 15.5-14 20-8-4.5-14-11-14-20V11z" fill="none" stroke="#a3e635" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M24 17l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L24 30.5 18.7 33.2l1.1-5.9-4.3-4.1 5.9-.8z" fill="#8b5cf6"/>
+          </svg>
+          Neon Police
+        </h3>
+        <p>Respond to crime across an open neon city. Watch the live crime map, respond fast, and bring suspects in.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Arrests score more than kills</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Suspects surrender when badly hurt — close in and arrest</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Drive, aim, and patrol the neon district</li>
+        </ul>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="neon-police/">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Play now
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/drsamonline/neon-games/tree/main/neon-police">Source</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Why it feels like an arcade</p>
+      <h2>Built to play, not to install</h2>
+      <p>Both cabinets share the same no-friction philosophy.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <h3>Runs in your browser</h3>
+        <p>Powered by WebGL in any modern browser — no download, no launcher, no store page.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V5a1 1 0 011-1h14a1 1 0 011 1v2M4 7h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M9 12h6"/></svg></div>
+        <h3>No account, no backend</h3>
+        <p>Nothing to sign up for and no server to call — your session stays entirely on your device.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 019 9 9 9 0 01-9 9"/><path d="M3 12a9 9 0 019-9"/><path d="M7 12a5 5 0 0110 0"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Offline-ready</h3>
+        <p>Once loaded it installs as an offline app and keeps working with the network unplugged.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.2 1.1 6L12 16.9 6.4 19l1.1-6L3 8.9 9 8z"/></svg></div>
+        <h3>Open world, both ways</h3>
+        <p>Procedurally generated cities for survival and for patrol — the world keeps generating as you roam.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="10" rx="5"/><path d="M8 10v4M6 12h4M15.5 11h.01M18 13h.01"/></svg></div>
+        <h3>Every key rebindable</h3>
+        <p>Play with mouse and keyboard or touch — and change any binding in Settings → Controls.</p>
+      </div>
+      <div class="f-card reveal">
+        <div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4h6l1 3h3v13H5V7h3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Moddable content packs</h3>
+        <p>Drop a plain script in <code>mods/</code> and add one tag — no server, no build step. Packs are validated on load.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Three moves</p>
+      <h2>How it works</h2>
+      <p>From landing here to playing takes about as long as reading this line.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num">1</div>
+        <h3>Pick a cabinet</h3>
+        <p>Choose <b>Dead Zone</b> or <b>Neon Police</b> from the wall above. Each opens its own page.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">2</div>
+        <h3>Click to play</h3>
+        <p>The game generates its city and drops you straight in — no download step, no waiting room.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">3</div>
+        <h3>Survive or serve</h3>
+        <p>Level up against the horde, or work the crime map and rack up arrests. Come back any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo">
+  <div class="wrap">
+    <div class="demo-panel reveal">
+      <div>
+        <p class="eyebrow">Live demo</p>
+        <h2>Both games are playable right now</h2>
+        <p style="color:var(--muted);max-width:46ch">
+          These are the real games, served from this repo — not a video. Open one and it boots
+          in your browser. Works with mouse and keyboard or touch, and runs offline once loaded.
+        </p>
+        <div class="hero-cta" style="margin-top:22px">
+          <a class="btn btn-primary" href="dead-zone/">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Launch Dead Zone
+          </a>
+          <a class="btn btn-ghost" href="neon-police/">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Launch Neon Police
+          </a>
+        </div>
+        <p class="cap">Illustration, not a screenshot — press play for the real thing.</p>
+      </div>
+      <div>
+        <svg class="demo-cab" viewBox="0 0 340 300" role="img" aria-label="Stylised arcade cabinet illustration with a joystick and buttons">
+          <defs>
+            <linearGradient id="dc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a3e635"/></linearGradient>
+          </defs>
+          <rect x="24" y="16" width="292" height="268" rx="24" fill="#120c26" stroke="url(#dc)" stroke-width="3"/>
+          <rect x="46" y="40" width="248" height="150" rx="14" fill="#0b0817" stroke="#2c2356" stroke-width="2"/>
+          <g>
+            <rect x="60" y="58" width="220" height="10" rx="5" fill="#8b5cf6"/>
+            <rect x="60" y="80" width="150" height="10" rx="5" fill="#a3e635" opacity=".85"/>
+            <rect x="60" y="102" width="190" height="10" rx="5" fill="#8b5cf6" opacity=".5"/>
+          </g>
+          <rect x="60" y="128" width="220" height="44" rx="10" fill="rgba(139,92,246,.16)" stroke="rgba(139,92,246,.6)"/>
+          <text x="170" y="156" text-anchor="middle" font-family="monospace" font-size="15" fill="#a78bfa">NEON GAMES</text>
+          <rect x="46" y="204" width="248" height="62" rx="12" fill="#1b1440" stroke="#2c2356"/>
+          <rect x="104" y="222" width="6" height="30" rx="3" fill="#a3e635"/><circle cx="107" cy="219" r="10" fill="#8b5cf6"/>
+          <circle cx="176" cy="234" r="12" fill="#a3e635"/><circle cx="176" cy="234" r="5" fill="#1b1440"/>
+          <circle cx="214" cy="234" r="12" fill="#8b5cf6"/><circle cx="214" cy="234" r="5" fill="#f1eeff"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GET STARTED ================= -->
+<section id="start">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Get started</p>
+      <h2>Just press play — or run it locally</h2>
+      <p>You need nothing but a browser. Developers can clone and serve the games themselves.</p>
+    </div>
+    <div class="start-grid">
+      <div class="reveal">
+        <p style="color:var(--muted)">
+          The hosted games above are ready to go. If you want to run the source yourself, serve
+          the game folder over HTTP — browsers block JavaScript modules on <code>file://</code>,
+          so double-clicking <code>index.html</code> will sit on the loading screen.
+        </p>
+        <div class="note">
+          This is exactly the guidance in each game's <code>START-HERE.txt</code>: serve over HTTP,
+          then open the local URL. The game also installs as an offline app once loaded.
+        </div>
+        <div class="badge-row" style="margin-top:22px">
+          <img src="https://img.shields.io/badge/Licence-CC_BY--NC--SA_4.0-ffd23a.svg" alt="Licence: CC BY-NC-SA 4.0" loading="lazy" onerror="this.style.display='none'" />
+          <img src="https://img.shields.io/badge/built_with-Neon_Engine-38f2c8.svg" alt="Built with Neon Engine" loading="lazy" onerror="this.style.display='none'" />
+          <img src="https://img.shields.io/badge/offline-ready-38f2c8.svg" alt="Offline ready" loading="lazy" onerror="this.style.display='none'" />
+          <img src="https://img.shields.io/badge/backend-none-59d0ff.svg" alt="No backend" loading="lazy" onerror="this.style.display='none'" />
+          <span class="cssbadge">licence <b>CC BY-NC-SA 4.0</b></span>
+          <span class="cssbadge v">engine <b>Neon Engine</b></span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="code">
+<span class="c"># clone the games</span>
+git clone https://github.com/drsamonline/neon-games.git
+cd neon-games/dead-zone        <span class="c"># or neon-police</span>
+
+<span class="c"># serve over HTTP (any one of these)</span>
+python3 -m http.server 8080
+<span class="c"># or, without Python:</span>
+npx serve .
+
+<span class="c"># then open</span>
+<span class="p">http://localhost:8080</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Questions</p>
+      <h2>FAQ</h2>
+      <p>The things people ask at the arcade door.</p>
+    </div>
+    <div class="faq">
+      <details class="qa reveal" open>
+        <summary>Do I need an account or to install anything? <span class="pm">+</span></summary>
+        <p>No. Both games run entirely in your browser with no install and no account — you just open the page and click play.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Is it really free? <span class="pm">+</span></summary>
+        <p>Yes. Both games are free to play under <b>CC BY-NC-SA 4.0</b> — share, study, mod and fork them, but credit Dr. Sohil Momin, don't use them commercially, and pass the same terms on.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Does it work offline? <span class="pm">+</span></summary>
+        <p>Once loaded, yes — the games install as an offline app and keep working with the network unplugged. There is no backend involved.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What can I play it on? <span class="pm">+</span></summary>
+        <p>Any modern browser with WebGL, on desktop or phone. It works with mouse and keyboard or touch, and on phones you get an on-screen stick and buttons.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Can I change the controls? <span class="pm">+</span></summary>
+        <p>Yes — every key can be changed in <b>Settings → Controls</b> in each game.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Can I make my own content? <span class="pm">+</span></summary>
+        <p>Yes. A content pack is a plain script that registers itself — drop it in <code>mods/</code>, add one <code>&lt;script&gt;</code> tag, and it loads with no server and no build step. Packs are validated on load, so a malformed one is skipped rather than breaking the game.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What are the games built with? <span class="pm">+</span></summary>
+        <p>Both are built on the <b>Neon Engine</b>, which is MIT licensed separately so you can build your own commercial games with it.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top" style="margin-bottom:14px">
+          <svg class="joy" viewBox="0 0 48 48" aria-hidden="true">
+            <defs><linearGradient id="jg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a3e635"/></linearGradient></defs>
+            <rect x="6" y="30" width="36" height="14" rx="7" fill="#1b1440" stroke="url(#jg2)" stroke-width="2"/>
+            <rect x="22" y="8" width="4" height="24" rx="2" fill="url(#jg2)"/>
+            <circle cx="24" cy="8" r="6" fill="#a3e635"/>
+          </svg>
+          <span>NEON<b>&nbsp;GAMES</b></span>
+        </a>
+        <p>Two free, open-world browser games built on the Neon Engine. No install, no account, no backend.</p>
+        <div class="badge-row" style="margin-top:16px">
+          <img src="https://img.shields.io/badge/backend-none-59d0ff.svg" alt="No backend" loading="lazy" onerror="this.style.display='none'" />
+          <span class="cssbadge v">2 games</span>
+        </div>
+      </div>
+      <div>
+        <h4>Games</h4>
+        <a href="dead-zone/">Dead Zone — survival</a>
+        <a href="neon-police/">Neon Police — crime response</a>
+        <a href="https://github.com/drsamonline/neon-games">Repository</a>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <a href="https://github.com/drsamonline">Dr. Sohil Momin on GitHub</a>
+        <a href="https://github.com/drsamonline/neon-engine">Neon Engine (MIT)</a>
+        <a href="https://github.com/drsamonline/neon-games/blob/main/LICENSE">Licence — CC BY-NC-SA 4.0</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Licensed <b>CC BY-NC-SA 4.0</b> · Neon Engine is MIT.</span>
+      <span>Built by <b>Dr. Sohil Momin</b> · <a href="https://github.com/drsamonline/neon-games">github.com/drsamonline/neon-games</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- JSON-LD: VideoGame -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Neon Games",
+  "url": "https://drsamonline.github.io/neon-games/",
+  "description": "A free arcade lobby of open-world browser games built on the Neon Engine: Dead Zone (endless zombie survival) and Neon Police (crime response across a neon city). No install, no account, no backend; offline-ready once loaded.",
+  "image": "https://socialify.git.ci/drsamonline/neon-games/image?name=1&owner=1&description=1&language=1&theme=Dark&font=Inter",
+  "genre": ["Survival", "Action", "Open world"],
+  "gamePlatform": ["Web browser"],
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (modern web browser with WebGL)",
+  "playMode": "SinglePlayer",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "author": {
+    "@type": "Person",
+    "name": "Dr. Sohil Momin",
+    "url": "https://github.com/drsamonline"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "hasPart": [
+    {
+      "@type": "VideoGame",
+      "name": "Dead Zone",
+      "url": "https://drsamonline.github.io/neon-games/dead-zone/",
+      "description": "Endless open-world zombie survival shooter that runs in the browser.",
+      "genre": "Survival",
+      "isAccessibleForFree": true,
+      "author": { "@type": "Person", "name": "Dr. Sohil Momin", "url": "https://github.com/drsamonline" }
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Neon Police",
+      "url": "https://drsamonline.github.io/neon-games/neon-police/",
+      "description": "Open-world crime-response shooter with a live crime map, running in the browser.",
+      "genre": "Action",
+      "isAccessibleForFree": true,
+      "author": { "@type": "Person", "name": "Dr. Sohil Momin", "url": "https://github.com/drsamonline" }
+    }
+  ]
+}
+</script>
+
+<script>
+  // Sticky nav shadow
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 8); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Mobile menu
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  links.addEventListener('click', function(e){
+    if (e.target.tagName === 'A'){ links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+  });
+
+  // Game-card glow follows the pointer
+  document.querySelectorAll('.game-card').forEach(function(card){
+    card.addEventListener('pointermove', function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top)/r.height*100) + '%');
+    });
+  });
+
+  // Reveal on scroll (motion-safe)
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  }
+</script>
+</body>
+</html>

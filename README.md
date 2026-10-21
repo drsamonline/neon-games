@@ -11,7 +11,7 @@
 [![Offline](https://img.shields.io/badge/offline-ready-38f2c8.svg)](
 [![No backend](https://img.shields.io/badge/backend-none-59d0ff.svg)](
 
-**Landing page:** https://drsamonline.github.io/neon-games/ &nbsp;·&nbsp; **Live demos:** [Dead Zone](https://drsamonline.github.io/neon-games/dead-zone/) &nbsp;·&nbsp; [Neon Police](https://drsamonline.github.io/neon-games/neon-police/)
+**Landing page:** https://drsamonline.github.io/neon-games/ &nbsp;·&nbsp; **Live demos:** [Dead Zone](https://drsamonline.github.io/neon-games/play/dead-zone/) &nbsp;·&nbsp; [Neon Police](https://drsamonline.github.io/neon-games/play/neon-police/)
 
 ---
 
@@ -34,8 +34,8 @@ Created by **[Dr. Sohil Momin](https://github.com/drsamonline)**.
 
 | Game | | What it is |
 | --- | --- | --- |
-| **[Dead Zone](https://drsamonline.github.io/neon-games/dead-zone/)** | 🧟 | Endless zombie survival. No timer and no end — the horde escalates as you level, and the city never stops generating. |
-| **[Neon Police](https://drsamonline.github.io/neon-games/neon-police/)** | 🚔 | Respond to crime across an open neon city. Arrest suspects when you can, shoot when you must — arrests pay better than kills. |
+| **[Dead Zone](https://drsamonline.github.io/neon-games/play/dead-zone/)** | 🧟 | Endless zombie survival. No timer and no end — the horde escalates as you level, and the city never stops generating. |
+| **[Neon Police](https://drsamonline.github.io/neon-games/play/neon-police/)** | 🚔 | Respond to crime across an open neon city. Arrest suspects when you can, shoot when you must — arrests pay better than kills. |
 
 Both work with mouse and keyboard or touch, and every key is rebindable.
 

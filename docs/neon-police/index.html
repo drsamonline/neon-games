@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0e14" />
+<title>Neon Police — Crime Response</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" href="./icons/icon-192.png" />
+<link rel="apple-touch-icon" href="./icons/icon-192.png" />
+<link rel="stylesheet" href="./hud.css" />
+</head>
+<body>
+  <div id="loading"><div class="load-bar"><i></i></div><div>GENERATING CITY…</div></div>
+
+  <script>
+  /* Preflight + boot watchdog.
+     The bundle is a classic script, so it loads from file:// as well as over
+     HTTP — double-clicking index.html works. What this catches is the rest:
+     a browser without WebGL, and a bundle that never executed (missing file,
+     or a browser policy that blocked it). Either way you get a plain
+     explanation instead of a loading bar that never ends. */
+  (function () {
+    function fail(title, body) {
+      var el = document.getElementById('loading');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'loading';
+        document.body.appendChild(el);
+      }
+      el.classList.remove('done');
+      el.innerHTML = '<div class="load-fail"><h2>' + title + '</h2><p>' + body + '</p></div>';
+    }
+    window.__bootFail = fail;
+
+    try {
+      var c = document.createElement('canvas');
+      if (!(c.getContext('webgl2') || c.getContext('webgl'))) throw new Error('no WebGL context');
+    } catch (e) {
+      return fail('WebGL is unavailable',
+        'This game needs WebGL. Try another browser, or enable hardware acceleration in ' +
+        'your browser settings.<br><br><code>' + String((e && e.message) || e) + '</code>');
+    }
+
+    /* If the bundle never ran, say so rather than spinning forever. */
+    window.__bootWatch = setTimeout(function () {
+      if (window.__game && window.__game.world) return;      // fine, just slow
+      var el = document.getElementById('loading');
+      if (!el || el.classList.contains('done')) return;
+      fail('Could not start',
+        'The game script did not finish loading. Check that every file from the zip is ' +
+        'in the same folder and that <code>*.game.js</code> is present. Opening the ' +
+        'browser console (F12) will show the exact error.');
+    }, 20000);
+  })();
+  </script>
+
+  <canvas id="game"></canvas>
+
+  <div id="overlay">
+    <div class="panel">
+      <h1>NEON POLICE</h1>
+      <p class="author">by Dr. Sohil Momin</p>
+      <p class="sub">Crime never sleeps in Neon District. Watch the minimap for active offences, respond fast, and bring suspects in — arrests score more than kills.</p>
+      <div class="controls">
+        <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move &middot; <kbd>Shift</kbd> run</div>
+        <div><kbd>Mouse</kbd> look &middot; <kbd>LMB</kbd> fire &middot; <kbd>RMB</kbd> aim</div>
+        <div><kbd>R</kbd> reload &middot; <kbd>V</kbd> melee &middot; <kbd>B</kbd> alt fire</div>
+        <div><kbd>G</kbd> throw &middot; <kbd>H</kbd> cycle throwable &middot; <kbd>X</kbd> bullet time</div>
+        <div><kbd>Tab</kbd> weapon wheel &middot; <kbd>1</kbd>&ndash;<kbd>9</kbd> weapon slot</div>
+        <div><kbd>F</kbd> interact &middot; drive &middot; arrest</div>
+        <div><kbd>Space</kbd> jump &middot; <kbd>Ctrl</kbd> crouch/slide &middot; <kbd>Z</kbd> prone</div>
+        <div><kbd>Q</kbd><kbd>E</kbd> lean &middot; <kbd>M</kbd> map &middot; <kbd>P</kbd> progress</div>
+        <div><kbd>O</kbd> photo &middot; <kbd>K</kbd> replay &middot; <kbd>J</kbd> disguise</div>
+        <div class="hint">Every key can be changed in Settings &rarr; Controls</div>
+      </div>
+      <button id="playbtn" class="btn">CLICK TO PLAY</button>
+      <button id="settingsbtn" class="btn sm ghost">SETTINGS</button>
+      <p class="hint">Suspects surrender when badly hurt — get close and press <b>F</b> to arrest for bonus score.</p>
+    </div>
+  </div>
+
+  <script src="./mods/example-pack.js"></script>
+  <script src="./police.game.js" defer></script>
+</body>
+</html>

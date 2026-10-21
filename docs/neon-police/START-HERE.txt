@@ -1,0 +1,17 @@
+HOW TO PLAY
+===========
+
+DO NOT double-click index.html. Browsers block JavaScript modules on
+file:// URLs, so the game will sit on the loading screen forever.
+
+Serve this folder over HTTP instead:
+
+  python3 -m http.server 8080
+
+then open:  http://localhost:8080
+
+On Windows without Python, either install Python from python.org, or run:
+
+  npx serve .
+
+Either works. The game also installs as an offline app once loaded.

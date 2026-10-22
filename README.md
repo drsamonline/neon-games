@@ -14,21 +14,11 @@
 [![Offline](https://img.shields.io/badge/offline-ready-38f2c8.svg)](https://drsamonline.github.io/neon-games/)
 [![No backend](https://img.shields.io/badge/backend-none-59d0ff.svg)](https://drsamonline.github.io/neon-games/)
 
-
 ---
-
-
-Two free, open-world browser games built on the **[Neon Engine](https://github.com/drsamonline/neon-engine)**.
-No install, no account, no backend — both run entirely in your browser and keep
-working offline once loaded.
 
 Created by **[Dr. Sohil Momin](https://github.com/drsamonline)**.
 
-
 ## ▶ Play
-
-[![Play Dead Zone](https://img.shields.io/badge/%E2%96%B6_PLAY-Dead_Zone-ff5a7a)](https://drsamonline.github.io/neon-games/play/dead-zone/)
-[![Play Neon Police](https://img.shields.io/badge/%E2%96%B6_PLAY-Neon_Police-59d0ff)](https://drsamonline.github.io/neon-games/play/neon-police/)
 
 | Game | | What it is |
 | --- | --- | --- |

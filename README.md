@@ -6,6 +6,8 @@
 [![Play Dead Zone](https://img.shields.io/badge/%E2%96%B6_PLAY-Dead_Zone-ff5a7a)](https://drsamonline.github.io/neon-games/play/dead-zone/)
 [![Play Neon Police](https://img.shields.io/badge/%E2%96%B6_PLAY-Neon_Police-59d0ff)](https://drsamonline.github.io/neon-games/play/neon-police/)
 
+**Download:** [Dead Zone — Windows (.exe)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-dead-zone-portable.exe) &nbsp;·&nbsp; [Dead Zone — Android (.apk)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-dead-zone.apk) &nbsp;·&nbsp; [Neon Police — Windows (.exe)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-neon-police-portable.exe) &nbsp;·&nbsp; [Neon Police — Android (.apk)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-neon-police.apk)
+
 [![Licence: CC BY-NC-SA 4.0](https://img.shields.io/badge/Licence-CC_BY--NC--SA_4.0-ffd23a.svg)](LICENSE)
 [![Built with Neon Engine](https://img.shields.io/badge/built_with-Neon_Engine-38f2c8.svg)](https://github.com/drsamonline/neon-engine)
 [![Offline](https://img.shields.io/badge/offline-ready-38f2c8.svg)](https://drsamonline.github.io/neon-games/)

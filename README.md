@@ -8,8 +8,8 @@
 
 [![Licence: CC BY-NC-SA 4.0](https://img.shields.io/badge/Licence-CC_BY--NC--SA_4.0-ffd23a.svg)](LICENSE)
 [![Built with Neon Engine](https://img.shields.io/badge/built_with-Neon_Engine-38f2c8.svg)](https://github.com/drsamonline/neon-engine)
-[![Offline](https://img.shields.io/badge/offline-ready-38f2c8.svg)](
-[![No backend](https://img.shields.io/badge/backend-none-59d0ff.svg)](
+[![Offline](https://img.shields.io/badge/offline-ready-38f2c8.svg)](https://drsamonline.github.io/neon-games/)
+[![No backend](https://img.shields.io/badge/backend-none-59d0ff.svg)](https://drsamonline.github.io/neon-games/)
 
 
 ---

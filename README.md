@@ -5,6 +5,7 @@
 [![Landing page](https://img.shields.io/badge/arcade_lobby-neon--games-8b5cf6)](https://drsamonline.github.io/neon-games/)
 [![Play Dead Zone](https://img.shields.io/badge/%E2%96%B6_PLAY-Dead_Zone-ff5a7a)](https://drsamonline.github.io/neon-games/play/dead-zone/)
 [![Play Neon Police](https://img.shields.io/badge/%E2%96%B6_PLAY-Neon_Police-59d0ff)](https://drsamonline.github.io/neon-games/play/neon-police/)
+[![All projects](https://img.shields.io/badge/All_projects-hub-8b5cf6)](https://drsamonline.github.io/)
 
 **Download:** [Dead Zone — Windows (.exe)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-dead-zone-portable.exe) &nbsp;·&nbsp; [Dead Zone — Android (.apk)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-dead-zone.apk) &nbsp;·&nbsp; [Neon Police — Windows (.exe)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-neon-police-portable.exe) &nbsp;·&nbsp; [Neon Police — Android (.apk)](https://github.com/drsamonline/neon-games/releases/latest/download/neon-games-neon-police.apk)
 

@@ -34,5 +34,5 @@ them, mod them and fork them, but credit Dr. Sohil Momin as the original creator
 do not use them commercially, and pass the same terms on. See [LICENSE](LICENSE)
 for the full legal code.
 
-The **Neon Engine** they are built on is PolyForm Noncommercial licensed separately, so you can build
+The **Neon Engine** they are built on is Licensed as stated in LICENSE separately, so you can build
 your own commercial games with it: **[neon-engine](https://github.com/drsamonline/neon-engine)**.

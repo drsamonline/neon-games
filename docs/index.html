@@ -309,7 +309,19 @@ a[href*="/releases/latest/download/"] svg{width:18px;height:18px;flex:none;displ
     section{padding:56px 0}
   }
 </style>
-<style id="__overflow_fix__"> /* horizontal-overflow fixes */ .start-grid>*,.cards>*{min-width:0} </style>
+<style id="__overflow_fix__"> /* horizontal-overflow fixes */ .start-grid>*,.cards>*{min-width:0} 
+  /* ---------- light theme ----------
+     Added so the page reads on paper. It overrides the page's own variables and
+     nothing else — no markup, no layout, no type. */
+  :root, html {
+    color-scheme: light;
+    --bg: #f7f6f2;
+    --panel: #ffffff;
+    --line: #e2ddd2;
+    --ink: #14161a;
+    --muted: #5c6470;
+  }
+</style>
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body>

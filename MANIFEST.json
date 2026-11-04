@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "locked": false,
+  "files": {
+    "README.md": {
+      "sha": "b4d5a31b57afd37de9fcfb7eccf8acfb5559565d",
+      "producer": "bootstrap@2026-11-04",
+      "class": "generated",
+      "at": "2026-11-04T20:06:32Z"
+    },
+    "docs/index.html": {
+      "sha": "e9b602db05d333f73466365c929245c3aa860242",
+      "producer": "bootstrap@2026-11-04",
+      "class": "generated",
+      "at": "2026-11-04T20:06:33Z"
+    },
+    ".github/workflows/build-apps.yml": {
+      "sha": "6c4268717921c9daa5fffbd56c1a100080f1be4f",
+      "producer": "bootstrap@2026-11-04",
+      "class": "canonical",
+      "at": "2026-11-04T20:06:33Z"
+    }
+  },
+  "updated": "2026-11-04T20:06:33Z"
+}

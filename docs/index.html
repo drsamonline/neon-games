@@ -13,29 +13,38 @@
   /* A lobby, not a landing page. Two cabinets side by side, each lit in its own
      colour, and the room around them dark. That is the whole product: a choice. */
   :root {
-    --bg: #0a0713; --panel: #120c26; --ink: #f2eefe; --mut: #9a92b8;
-    --line: #241a44; --violet: #a78bfa; --acid: #a3e635; --blue: #5b8cff;
+    /* neon: near-black with a violet cast, and three saturated lights */
+    --bg: #07030f; --panel: #0f0620; --ink: #f6f0ff; --mut: #a99bc8;
+    --line: #2a1250;
+    --violet: #c026d3; --acid: #39ff14; --blue: #00e5ff; --pink: #ff2d95;
     --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     --sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #f7f6f2; --panel: #ffffff; --ink: #16122a; --mut: #5c6470;
-            --line: #e2ddd2; --violet: #6d28d9; --acid: #4d7c0f; --blue: #1d4ed8; }
+    :root { --bg: #fbf7ff; --panel: #ffffff; --ink: #170a2b; --mut: #5b4b73;
+            --line: #e6d9f5; --violet: #a21caf; --acid: #1a7f0a; --blue: #0e7490; --pink: #be185d; }
   }
-  :root[data-theme="dark"] { --bg: #0a0713; --panel: #120c26; --ink: #f2eefe; --mut: #9a92b8;
-    --line: #241a44; --violet: #a78bfa; --acid: #a3e635; --blue: #5b8cff; }
-  :root[data-theme="light"] { --bg: #f7f6f2; --panel: #fff; --ink: #16122a; --mut: #5c6470;
-    --line: #e2ddd2; --violet: #6d28d9; --acid: #4d7c0f; --blue: #1d4ed8; }
+  :root[data-theme="dark"] { --bg: #07030f; --panel: #0f0620; --ink: #f6f0ff; --mut: #a99bc8;
+    --line: #2a1250; --violet: #c026d3; --acid: #39ff14; --blue: #00e5ff; --pink: #ff2d95; }
+  :root[data-theme="light"] { --bg: #fbf7ff; --panel: #fff; --ink: #170a2b; --mut: #5b4b73;
+    --line: #e6d9f5; --violet: #a21caf; --acid: #1a7f0a; --blue: #0e7490; --pink: #be185d; }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.62;
          -webkit-font-smoothing: antialiased; background: var(--bg);
          background-image:
-           radial-gradient(40rem 22rem at 12% -8%, color-mix(in srgb, var(--acid) 14%, transparent), transparent 60%),
-           radial-gradient(40rem 22rem at 88% -8%, color-mix(in srgb, var(--blue) 16%, transparent), transparent 60%); }
+           radial-gradient(42rem 24rem at 10% -6%, color-mix(in srgb, var(--acid) 26%, transparent), transparent 62%),
+           radial-gradient(42rem 24rem at 90% -6%, color-mix(in srgb, var(--blue) 28%, transparent), transparent 62%),
+           radial-gradient(50rem 30rem at 50% 110%, color-mix(in srgb, var(--pink) 18%, transparent), transparent 65%); }
+  /* the CRT the cabinets are standing in */
+  body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: repeating-linear-gradient(180deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
+    opacity: .30; }
+  @media (prefers-color-scheme: light) { body::after { opacity: .08; } }
+  .wrap { position: relative; z-index: 2; }
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 26px; }
-  a { color: var(--violet); text-underline-offset: 3px; }
+  a { color: var(--pink); text-underline-offset: 3px; }
   code { font-family: var(--mono); font-size: .86em; background: var(--panel);
          border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; }
 
@@ -66,9 +75,11 @@
   @keyframes blink { 50% { opacity: .25; } }
   h1 { font-size: clamp(34px, 6.4vw, 66px); line-height: 1.02; letter-spacing: -.04em; margin: 18px auto 0;
        font-weight: 800; max-width: 17ch; }
-  h1 em { font-style: normal; background: linear-gradient(92deg, var(--acid), var(--blue));
+  h1 { text-shadow: 0 0 42px color-mix(in srgb, var(--pink) 45%, transparent); }
+  h1 em { font-style: normal; background: linear-gradient(92deg, var(--acid), var(--blue) 55%, var(--pink));
           -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent; color: var(--acid); }
+          -webkit-text-fill-color: transparent; color: var(--acid);
+          filter: drop-shadow(0 0 22px color-mix(in srgb, var(--blue) 55%, transparent)); }
   .lead { font-size: 17.5px; color: var(--mut); max-width: 54ch; margin: 18px auto 0; }
   .lead b { color: var(--ink); font-weight: 600; }
 
@@ -78,18 +89,29 @@
   .cab { position: relative; border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
          padding: 22px 22px 20px; overflow: hidden; }
   .cab::before { content: ''; position: absolute; inset: 0 0 auto; height: 3px; }
-  .cab.dz::before { background: linear-gradient(90deg, var(--acid), transparent); }
-  .cab.np::before { background: linear-gradient(90deg, var(--blue), transparent); }
+  .cab.dz { border-color: color-mix(in srgb, var(--acid) 45%, var(--line));
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--acid) 18%, transparent),
+                        0 24px 70px -40px var(--acid); }
+  .cab.np { border-color: color-mix(in srgb, var(--blue) 45%, var(--line));
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--blue) 18%, transparent),
+                        0 24px 70px -40px var(--blue); }
+  .cab.dz::before { background: var(--acid); box-shadow: 0 0 18px 2px var(--acid); }
+  .cab.np::before { background: var(--blue); box-shadow: 0 0 18px 2px var(--blue); }
   .cab .kind { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
-  .cab.dz .kind { color: var(--acid); } .cab.np .kind { color: var(--blue); }
+  .cab.dz .kind { color: var(--acid); text-shadow: 0 0 14px color-mix(in srgb, var(--acid) 70%, transparent); }
+  .cab.np .kind { color: var(--blue); text-shadow: 0 0 14px color-mix(in srgb, var(--blue) 70%, transparent); }
+  .cab h2 { text-shadow: 0 0 26px color-mix(in srgb, currentColor 30%, transparent); }
   .cab h2 { font-size: 26px; margin: 6px 0 8px; letter-spacing: -.025em; }
   .cab p { margin: 0 0 12px; font-size: 15px; color: var(--mut); }
   .cab ul { margin: 0 0 16px; padding-left: 18px; font-size: 14px; color: var(--mut); }
   .cab li { margin: 4px 0; }
   .cab .go { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 8px;
              font-family: var(--mono); font-size: 13px; text-decoration: none; font-weight: 600; }
-  .cab.dz .go { background: var(--acid); color: #0a0713; }
-  .cab.np .go { background: var(--blue); color: #04101f; }
+  .cab.dz .go { background: var(--acid); color: #07030f;
+                box-shadow: 0 0 28px -4px var(--acid), inset 0 0 0 1px rgba(255,255,255,.35); }
+  .cab.np .go { background: var(--blue); color: #07030f;
+                box-shadow: 0 0 28px -4px var(--blue), inset 0 0 0 1px rgba(255,255,255,.35); }
+  .cab .go:hover { filter: brightness(1.12); }
   :root[data-theme="dark"] .cab .go { color: #0a0713; }
   .cab .alt { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-family: var(--mono);
               font-size: 11px; }
@@ -99,7 +121,8 @@
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line);
            border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 34px 0 0; }
   .facts div { background: var(--panel); padding: 15px 17px; text-align: center; }
-  .facts b { display: block; font-family: var(--mono); font-size: 17px; color: var(--violet); }
+  .facts b { display: block; font-family: var(--mono); font-size: 17px; color: var(--pink);
+             text-shadow: 0 0 18px color-mix(in srgb, var(--pink) 60%, transparent); }
   .facts span { font-size: 12px; color: var(--mut); }
   @media (max-width: 700px) { .facts { grid-template-columns: repeat(2, 1fr); } }
 

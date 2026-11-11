@@ -1,5 +1,7 @@
 # Neon Games
 
+
+![Screenshot](docs/shot.png)
 **Two free, open-world browser games that run straight from your browser — no install, no account, no backend.**
 
 [![Landing page](https://img.shields.io/badge/arcade_lobby-neon--games-8b5cf6)](https://drsamonline.github.io/neon-games/)
